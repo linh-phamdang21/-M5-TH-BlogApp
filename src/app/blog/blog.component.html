@@ -1,0 +1,51 @@
+<h3>Simple Blog</h3>
+
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label>
+      Title
+      <br>
+      <input type="text" formControlName="title">
+    </label>
+  </div>
+  <div *ngIf="postForm.get('title').invalid && postForm.get('title').touched" style="color: red">
+    Title is required and min length is 10
+  </div>
+  <div>
+    <label>
+      body
+      <br>
+      <textarea formControlName="body" cols="30" rows="10"></textarea>
+    </label>
+  </div>
+  <div *ngIf="postForm.get('body').invalid && postForm.get('body').touched" style="color: red">
+    Body is required and min length is 10
+  </div>
+  <button type="submit">Submit</button>
+</form>
+<div class="table_container">
+  <table class="table table-striped col-8 bloglist">
+    <tr>
+      <td>#</td>
+      <td>Title</td>
+      <td colspan="2" style="text-align: center">Action</td>
+    </tr>
+    <tr *ngFor="let post of postList; index as i">
+      <td>
+        {{post.id}}
+      </td>
+      <td>
+        <a [routerLink]="['/blog', post.id]">
+          {{post.title}}
+        </a>
+      </td>
+      <td>
+        <a [routerLink]="['/blog', post.id, 'edit']">Edit</a>
+      </td>
+      <td>
+        <button (click)="deletePost(i)">Delete</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
